@@ -1,35 +1,71 @@
+// pipeline
+// {
+//     agent any
+//     stages
+//     {
+//         stage("build")
+//         {
+//             steps
+//             {
+//                 echo "building the application..."
+
+//                 script
+//                 {
+//                     def test = 2 + 2 > 3 ? "cool" : "not cool"
+//                     echo test
+//                 }
+//             }
+//         }
+
+//         stage("test")
+//         {
+//             steps
+//             {
+//                 echo "testing the application..."
+//             }
+//         }
+
+//         stage("deploy")
+//         {
+//             steps 
+//             {
+//                 echo "deploying the application..."
+//             }
+//         }
+//     }
+// }
+
+
 pipeline
 {
     agent any
     stages
     {
-        stage("build")
+        stage("run frontend")
         {
             steps
             {
-                echo "building the application..."
-
-                script
+                echo "executing yarn..."
+                nodejs('NodeJS 22.8.0')
                 {
-                    def test = 2 + 2 > 3 ? "cool" : "not cool"
-                    echo test
+                    sh 'yarn --version'
                 }
             }
         }
 
-        stage("test")
+        stage("run backend")
         {
             steps
             {
-                echo "testing the application..."
-            }
-        }
-
-        stage("deploy")
-        {
-            steps 
-            {
-                echo "deploying the application..."
+                echo "executing gradle..."
+                // withGradle()
+                // {
+                //     sh './gradlew -v'
+                // }
+                nodejs("NodeJS 22.8.0")
+                {
+                    sh 'yarn --version'
+                }
             }
         }
     }
